@@ -25,7 +25,7 @@ chapter: false
 
 &emsp; **Internship Duration:** From 20/04/2026 to 10/07/2026
 
-![Your profile picture](/images/anh1.png)
+![Your profile picture](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/anh1.png)
 
 ### Report Content
 

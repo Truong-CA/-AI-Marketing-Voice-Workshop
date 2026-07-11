@@ -83,7 +83,7 @@ uvicorn main:app --reload --port 8000
 
 Mở `http://localhost:8000` — bạn sẽ thấy:
 
-![Backend đang chạy](/images/13.png)
+![Backend đang chạy](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/13.png)
 
 #### Bước 3 — Backend giao tiếp với Bedrock và VieNeu-TTS như thế nào
 

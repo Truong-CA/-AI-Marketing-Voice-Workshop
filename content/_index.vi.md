@@ -25,7 +25,7 @@ chapter: false
 
 &emsp; **Thời gian thực tập:** Từ ngày 20/04/2026 đến ngày 10/07/2026
 
-![Ảnh đại diện của bạn](/images/anh1.png)
+![Ảnh đại diện của bạn](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/anh1.png)
 
 
 

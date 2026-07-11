@@ -36,7 +36,7 @@ Kết quả trả về nên có dạng:
   ]
 }
 ```
-![list giọng](/images/16.png)
+![list giọng](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/16.png)
 
 #### Bước 2 — Tạo thử một mẫu giọng (preview)
 
@@ -47,7 +47,7 @@ curl http://localhost:8000/api/v1/voices/Xuân%20Vĩnh/preview
 Endpoint này **miễn phí, không cần đăng nhập**, sinh ra một câu mẫu ngắn và cache lại file, nên các lần gọi
 sau cho cùng giọng sẽ trả về ngay lập tức.
 
-![tạo mẫu giọng](/images/15.png)
+![tạo mẫu giọng](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/15.png)
 
 #### Kiểm tra lại
 - [ ] `GET /api/v1/voices` trả về đủ 10 giọng đọc

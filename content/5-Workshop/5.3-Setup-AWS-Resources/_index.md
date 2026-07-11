@@ -13,7 +13,7 @@ pre : " <b> 5.3. </b> "
 3. Enable **Block all public access** (the bucket will be accessed via CloudFront, so direct public access is not required).
 4. Click **Create bucket**.
 
-![create bucket](/images/3.png)
+![create bucket](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/3.png)
 
 *(The steps for creating a CloudFront distribution pointing to this bucket are detailed in section [5.3.1](5.3.1-create-gwe),
 and the SES + CloudWatch Logs configuration is covered in section [5.3.2](5.3.2-test-gwe).)*
@@ -24,7 +24,7 @@ and the SES + CloudWatch Logs configuration is covered in section [5.3.2](5.3.2-
 2. Request/enable access for **Anthropic Claude 3 Sonnet**.
 3. Wait until the status displays **Access granted**.
 
-![bedrock model access](/images/1.png)
+![bedrock model access](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/1.png)
 
 #### Step 3 — Create a Least-Privilege IAM Policy
 

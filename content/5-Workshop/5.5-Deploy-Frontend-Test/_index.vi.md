@@ -53,11 +53,11 @@ npm start
 
 Mở `http://localhost:3000`.
 
-![frontend đang chạy](/images/19.png)
+![frontend đang chạy](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/19.png)
 
 #### Bước 3 — Chạy luồng end-to-end
 
-![quy trinh end to end](/images/ete.png)
+![quy trinh end to end](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/ete.png)
 
 1. **Đăng ký/Đăng nhập** trên ứng dụng (email/mật khẩu hoặc Google Sign-In) — xác nhận credit chào mừng
    (200 credit) hiển thị đúng ở sidebar, và kiểm tra hộp thư đã nhận được email chào mừng qua SES.

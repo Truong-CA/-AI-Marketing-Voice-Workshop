@@ -26,7 +26,7 @@ After testing the APIs in [Section 5.4.3](../5.4.3-test-endpoint), this step hel
 2. Navigate to your S3 bucket and open the `audio/` prefix.
 3. Confirm that a new `.wav` file has been uploaded after calling the `generate-voice` API.
 
-![Object in Amazon S3](/images/17.png)
+![Object in Amazon S3](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/17.png)
 
 #### Step 3 — Verify Audio Delivery Through CloudFront
 

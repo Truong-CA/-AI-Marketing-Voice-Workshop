@@ -130,8 +130,8 @@ Attending this event gave me the opportunity to explore the latest trends in AI 
 
 #### Photos from the Event
 
-![Event 2 - Image 1](/images/b21.jpg)
+![Event 2 - Image 1](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/b21.jpg)
 
-![Event 2 - Image 2](/images/b22.jpg)
+![Event 2 - Image 2](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/b22.jpg)
 
-![Event 2 - Image 3](/images/b23.jpg)
+![Event 2 - Image 3](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/b23.jpg)

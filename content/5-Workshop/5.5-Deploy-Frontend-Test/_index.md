@@ -54,11 +54,11 @@ npm start
 
 Open `http://localhost:3000`.
 
-![frontend running](/images/19.png)
+![frontend running](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/19.png)
 
 #### Step 3 — Run the End-to-End Flow
 
-![end to end flow](/images/ete.png)
+![end to end flow](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/ete.png)
 
 1. **Register/Login** on the application (email/password or Google Sign-In) — confirm that the welcome credits (200 credits) are displayed correctly in the sidebar, and check the inbox to confirm the welcome email was received via SES.
 2. Go to the **Select Voice** tab, click ▶ to preview several different Vietnamese voices — the first time for each voice will take a few seconds to generate the sample, subsequent times will be faster due to caching.

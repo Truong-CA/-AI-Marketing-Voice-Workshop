@@ -135,6 +135,6 @@ Tham gia **FCAJ Community Day** là một trải nghiệm rất bổ ích, giúp
 
 #### Một số hình ảnh khi tham gia sự kiện
 
-![Event 1 - Hinh 2](/images/b11.jpg)
+![Event 1 - Hinh 2](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/b11.jpg)
 
-![Event 1 - Hinh 2](/images/b12.jpg)
+![Event 1 - Hinh 2](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/b12.jpg)

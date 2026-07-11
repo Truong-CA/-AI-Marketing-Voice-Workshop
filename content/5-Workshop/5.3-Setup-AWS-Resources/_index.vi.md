@@ -13,7 +13,7 @@ pre : " <b> 5.3. </b> "
 3. Bật **Block all public access** (bucket sẽ được truy cập qua CloudFront, không cần public trực tiếp).
 4. Nhấn **Create bucket**.
 
-![tạo bucket](/images/3.png)
+![tạo bucket](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/3.png)
 
 *(Bước tạo CloudFront distribution trỏ về bucket này được hướng dẫn chi tiết ở mục [5.3.1](5.3.1-create-gwe),
 và cấu hình SES + CloudWatch Logs ở mục [5.3.2](5.3.2-test-gwe).)*
@@ -24,7 +24,7 @@ và cấu hình SES + CloudWatch Logs ở mục [5.3.2](5.3.2-test-gwe).)*
 2. Yêu cầu/bật quyền truy cập cho **Anthropic Claude 3 Sonnet**.
 3. Chờ đến khi trạng thái hiển thị **Access granted**.
 
-![bedrock model access](/images/1.png)
+![bedrock model access](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/1.png)
 
 #### Bước 3 — Tạo IAM policy least-privilege
 

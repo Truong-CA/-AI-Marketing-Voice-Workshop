@@ -25,7 +25,7 @@ public access** — người dùng chỉ có thể truy cập audio qua domain C
 4. **Viewer protocol policy**: chọn **Redirect HTTP to HTTPS**.
 5. Giữ nguyên các mặc định khác, nhấn **Create distribution**.
 
-![tạo distribution](/images/6.png)
+![tạo distribution](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/6.png)
 
 #### Bước 3 — Cập nhật S3 bucket policy
 Sau khi tạo xong, CloudFront console sẽ gợi ý một **bucket policy** để dán vào S3 bucket, cho phép CloudFront
@@ -38,7 +38,7 @@ Sau khi Distribution chuyển trạng thái từ **Deploying** sang **Enabled** 
 dạng `dxxxxxxxxxxxxx.cloudfront.net` — bạn sẽ điền domain này vào biến `CLOUDFRONT_DOMAIN` của backend ở bước
 [Triển khai backend](../../5.4-Deploy-Backend/).
 
-![domain distribution](/images/9.png)
+![domain distribution](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/9.png)
 
 {{% notice tip %}}
 Nếu bạn chưa muốn tạo CloudFront ngay, backend vẫn chạy được bình thường — chỉ cần để trống

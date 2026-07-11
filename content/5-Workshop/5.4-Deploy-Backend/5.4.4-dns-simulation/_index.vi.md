@@ -28,7 +28,7 @@ thật sự đã đi đúng qua CloudWatch Logs và CloudFront/S3.
 1. Mở **S3 console** → vào bucket của bạn → prefix `audio/`.
 2. Xác nhận có object `.wav` mới tương ứng với lần gọi `generate-voice` ở bước trước.
 
-![object trong S3](/images/17.png)
+![object trong S3](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/17.png)
 
 #### Bước 3 — Xác nhận audio phát được qua CloudFront
 

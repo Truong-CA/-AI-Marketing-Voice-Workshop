@@ -41,4 +41,4 @@ git clone https://github.com/Truong-CA/AI-ContentCreator
 cd "AI Marketing Voice"
 ```
 
-![GitHub Repository](/images/12.png)
+![GitHub Repository](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/12.png)

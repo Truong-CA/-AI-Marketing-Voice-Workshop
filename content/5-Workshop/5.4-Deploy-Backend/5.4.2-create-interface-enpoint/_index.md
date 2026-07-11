@@ -31,7 +31,7 @@ The returned result should look like this:
   ]
 }
 ```
-![voice list](/images/16.png)
+![voice list](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/16.png)
 
 #### Step 2 — Generate a Sample Voice Preview
 
@@ -41,7 +41,7 @@ curl http://localhost:8000/api/v1/voices/Xuân%20Vĩnh/preview
 
 This endpoint is **free and requires no login**. It generates a short sample sentence and caches the file, so subsequent calls for the same voice will return immediately.
 
-![generate voice preview](/images/15.png)
+![generate voice preview](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/15.png)
 
 #### Verification Checklist
 - [ ] `GET /api/v1/voices` returns all 10 voices

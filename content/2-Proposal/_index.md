@@ -34,7 +34,7 @@ All within a single request-response flow, at a fraction of the cost and time co
 
 **Voiceover:** The system uses **VieNeu-TTS**, an open-source Vietnamese text-to-speech model licensed under Apache 2.0, chosen because commercial TTS services lack adequate Vietnamese voice support.
 
-![System Architecture](/images/main.png)
+![System Architecture](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/main.png)
 
 **Component Design:**
 - **Frontend** — collects product information from the user, calls the backend API, selects a voice, plays and downloads the generated audio.
@@ -42,13 +42,13 @@ All within a single request-response flow, at a fraction of the cost and time co
 - **Prompt Layer** — a dedicated prompt builder maps the platform (TikTok/Instagram/Facebook/YouTube), tone, and duration into a structured prompt, along with a validator that checks required fields before calling Bedrock.
 - **Credit System** — each new registration receives welcome credits; each script generation and voice creation deducts the corresponding credits, with all transactions recorded for easy auditing.
 
-![End-to-End Architecture](/images/ete.png)
+![End-to-End Architecture](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/ete.png)
 
-![Script Generation Flow](/images/kb.png)
+![Script Generation Flow](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/kb.png)
 
-![Audio Generation Flow](/images/qtat.png)
+![Audio Generation Flow](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/qtat.png)
 
-![Credit Flow](/images/credit.png)
+![Credit Flow](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/credit.png)
 
 ### 4. Technical Implementation
 **Implementation Phases**

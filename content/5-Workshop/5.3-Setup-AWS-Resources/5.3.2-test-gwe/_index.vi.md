@@ -15,8 +15,8 @@ pre : " <b> 5.3.2 </b> "
 4. Mở hộp thư, bấm vào link xác nhận trong email từ AWS.
 5. Quay lại SES console, xác nhận trạng thái identity chuyển thành **Verified**.
 
-![verified](/images/10.png)
-![verified](/images/11.png)
+![verified](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/10.png)
+![verified](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/11.png)
 
 {{% notice tip %}}
 Tài khoản SES mới mặc định ở chế độ **Sandbox** — chỉ gửi được email tới các địa chỉ **đã verify**. Với mục

@@ -21,7 +21,7 @@ Origin Access Control allows CloudFront to read objects in the S3 bucket even wh
 4. **Viewer protocol policy**: select **Redirect HTTP to HTTPS**.
 5. Keep all other defaults and click **Create distribution**.
 
-![create distribution](/images/6.png)
+![create distribution](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/6.png)
 
 #### Step 3 — Update the S3 Bucket Policy
 After creation, the CloudFront console will suggest a **bucket policy** to paste into the S3 bucket, allowing CloudFront (via OAC) to read objects while still blocking direct public access. Copy that policy and paste it into **S3 bucket → Permissions → Bucket policy**.
@@ -29,7 +29,7 @@ After creation, the CloudFront console will suggest a **bucket policy** to paste
 #### Step 4 — Record the Distribution Domain
 After the distribution transitions from **Deploying** to **Enabled** — which typically takes a few minutes — copy the domain in the format `dxxxxxxxxxxxxx.cloudfront.net`. You will enter this domain into the `CLOUDFRONT_DOMAIN` variable of the backend in the [Backend Deployment](../../5.4-Deploy-Backend/) step.
 
-![distribution domain](/images/9.png)
+![distribution domain](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/9.png)
 
 {{% notice tip %}}
 If you do not want to create a CloudFront distribution just yet, the backend will still run normally — simply leave `CLOUDFRONT_DOMAIN` empty and the system will automatically fall back to using presigned URLs directly from S3.

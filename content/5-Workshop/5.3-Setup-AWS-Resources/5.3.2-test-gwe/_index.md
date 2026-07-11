@@ -14,8 +14,8 @@ pre : " <b> 5.3.2 </b> "
 4. Open your inbox and click the confirmation link in the email from AWS.
 5. Return to the SES console and confirm that the identity status has changed to **Verified**.
 
-![verified](/images/10.png)
-![verified](/images/11.png)
+![verified](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/10.png)
+![verified](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/11.png)
 
 {{% notice tip %}}
 By default, new SES accounts are in **Sandbox** mode — you can only send emails to **verified** addresses. For demo/workshop purposes, verifying your own email is sufficient for testing. If you want to send emails to any user without prior verification, you need to go to **Account dashboard** → **Request production access** and fill out the form, which is typically approved within a few hours to a day.

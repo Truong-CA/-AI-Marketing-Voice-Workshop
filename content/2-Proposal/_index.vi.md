@@ -49,7 +49,7 @@ request-response duy nhất, với chi phí và thời gian thấp hơn rất nh
 **Giọng đọc:** hệ thống dùng **VieNeu-TTS**, một mô hình text-to-speech tiếng Việt
 mã nguồn mở có giấy phép Apache 2.0, phù hợp vì các dịch vụ TTS thương mại.
 
-![Kiến trúc hệ thống](/images/main.png)
+![Kiến trúc hệ thống](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/main.png)
 
 **Thiết kế thành phần:**
 - **Frontend** — thu thập thông tin sản phẩm từ người dùng, gọi API backend, chọn giọng đọc, phát/tải
@@ -62,13 +62,13 @@ mã nguồn mở có giấy phép Apache 2.0, phù hợp vì các dịch vụ T
 - **Hệ thống credit** — mỗi lượt đăng ký được tặng credit chào mừng; mỗi lần tạo kịch bản và tạo giọng đọc sẽ
   trừ credit tương ứng, mọi giao dịch đều được ghi lại để dễ kiểm tra.
 
-![](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/ete.png)
+![Quy Trinh End To End](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/ete.png)
 
-![Quy trình tạo script](/images/kb.png)
+![Quy trình tạo script](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/kb.png)
 
-![Quy trình tạo Am Thanh](/images/qtat.png)
+![Quy trình tạo Am Thanh](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/qtat.png)
 
-![Luồng Credit](/images/credit.png)
+![Luồng Credit](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/credit.png)
 
 ### 4. Triển khai kỹ thuật
 **Các giai đoạn triển khai**

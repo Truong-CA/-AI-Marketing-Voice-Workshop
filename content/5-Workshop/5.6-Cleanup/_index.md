@@ -69,4 +69,4 @@ Amazon Bedrock uses **on-demand pricing**, meaning simply enabling model access 
 - [ ] No Amazon EC2, AWS App Runner, or Amazon ECS resources are still running.
 - [ ] Running `aws s3 ls` and checking the IAM, CloudFront, and CloudWatch consoles confirms that all workshop resources have been removed.
 
-![Cleanup Confirmation](/images/5-Workshop/5.6-Cleanup/cleanup-confirm.png)
+![Cleanup Confirmation](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/5-Workshop/5.6-Cleanup/cleanup-confirm.png)

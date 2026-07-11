@@ -135,6 +135,6 @@ Attending **FCAJ Community Day** was a highly rewarding experience, helping me c
 
 #### Some Photos from the Event
 
-![Event 1 - Image 1](/images/b11.jpg)
+![Event 1 - Image 1](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/b11.jpg)
 
-![Event 1 - Image 2](/images/b12.jpg)
+![Event 1 - Image 2](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/b12.jpg)

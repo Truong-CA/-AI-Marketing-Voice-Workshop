@@ -18,4 +18,4 @@ Additionally, when a user registers a new account, the system sends a notificati
 
 #### Workshop Overview
 
-![Overview Diagram](/images/main.png)
+![Overview Diagram](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/main.png)

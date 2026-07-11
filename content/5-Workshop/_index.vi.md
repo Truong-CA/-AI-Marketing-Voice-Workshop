@@ -35,13 +35,13 @@ Các dịch vụ của AWS mà chúng ta cần phải chuẩn bị:
   
 - **VieNeu-TTS** — một mô hình TTS tiếng Việt mã nguồn mở, chạy trên CPU của chính backend, miễn phí và không phụ thuộc dịch vụ ngoài cho phần giọng đọc.
 
-![Kiến trúc End To End](/images/ete.png) 
+![Kiến trúc End To End](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/ete.png) 
 
-![Quy trình tạo script](/images/kb.png)
+![Quy trình tạo script](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/kb.png)
 
-![Quy trình tạo Am Thanh](/images/qtat.png)
+![Quy trình tạo Am Thanh](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/qtat.png)
 
-![Luồng Credit](/images/credit.png)
+![Luồng Credit](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/credit.png)
 
 
 #### Nội dung

@@ -36,4 +36,4 @@ ví dụ:
 git clone <https://github.com/Truong-CA/AI-ContentCreator>
 cd "AI Marketing Voice"
 ```
-![Github](/images/12.png)
+![Github](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/12.png)

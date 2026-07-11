@@ -21,5 +21,5 @@ CloudWatch Logs** để dễ theo dõi/debug.
 
 #### Tổng Quan workshop
 
-![sơ đồ tổng quan](/images/main.png)
+![sơ đồ tổng quan](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/main.png)
 
