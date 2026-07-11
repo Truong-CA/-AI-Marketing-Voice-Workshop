@@ -25,13 +25,13 @@ The AWS services we need to prepare:
 
 - **VieNeu-TTS** — an open-source Vietnamese TTS model running on the backend's own CPU, free of charge and independent of any external service for the voiceover component.
 
-![End-to-End Architecture](/images/ete.png)
+![End-to-End Architecture](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/ete.png)
 
-![Script Generation Flow](/images/kb.png)
+![Script Generation Flow](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/kb.png)
 
-![Audio Generation Flow](/images/qtat.png)
+![Audio Generation Flow](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/qtat.png)
 
-![Credit Flow](/images/credit.png)
+![Credit Flow](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/credit.png)
 
 
 #### Contents

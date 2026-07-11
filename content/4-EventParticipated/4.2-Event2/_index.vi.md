@@ -129,8 +129,8 @@ Tham gia sự kiện giúp tôi có cơ hội tiếp cận nhiều xu hướng m
 - Các dịch vụ AI trên AWS giúp doanh nghiệp nâng cao hiệu suất, giảm chi phí vận hành và cải thiện trải nghiệm người dùng.
 #### Một số hình ảnh khi tham gia sự kiện
 
-![Event 1 - Hinh 2](/images/b21.jpg)
+![Event 1 - Hinh 2](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/b21.jpg)
 
-![Event 1 - Hinh 2](/images/b22.jpg)
+![Event 1 - Hinh 2](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/b22.jpg)
 
-![Event 1 - Hinh 3](/images/b23.jpg)
+![Event 1 - Hinh 3](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/b23.jpg)
