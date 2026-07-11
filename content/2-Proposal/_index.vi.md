@@ -62,7 +62,7 @@ mã nguồn mở có giấy phép Apache 2.0, phù hợp vì các dịch vụ T
 - **Hệ thống credit** — mỗi lượt đăng ký được tặng credit chào mừng; mỗi lần tạo kịch bản và tạo giọng đọc sẽ
   trừ credit tương ứng, mọi giao dịch đều được ghi lại để dễ kiểm tra.
 
-![](C:/Users/Loc/Desktop/workshop/WorkShop_Final/static/images/ete.png)
+![](https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/ete.png)
 
 ![Quy trình tạo script](/images/kb.png)
 
