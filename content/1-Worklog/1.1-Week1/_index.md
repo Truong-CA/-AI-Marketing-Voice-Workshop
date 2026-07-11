@@ -34,7 +34,7 @@ pre: " <b> 1.1. </b> "
 * Successfully installed and configured AWS CLI on the local machine.
 * Executed basic AWS CLI commands to verify account information and the working environment.
 * Fully prepared the environment to begin researching AWS services in the coming weeks.
-* Understood the AWS global infrastructure architecture, including Regions, Availability Zones (AZs), and Edge Locations, and learned how to select the appropriate Region when deploying resources.
+* Understood the AWS global infrastructure architecture, including Regions, Availability Zones (AZ), and Edge Locations, and learned how to select the appropriate Region when deploying resources.
 
 * Gained knowledge of AWS core service groups such as Compute, Storage, Networking, Database, Security, and Management, thereby gaining an overall understanding of the AWS ecosystem.
 
