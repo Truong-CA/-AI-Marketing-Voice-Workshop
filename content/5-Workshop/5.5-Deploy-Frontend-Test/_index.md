@@ -68,7 +68,7 @@ Open `http://localhost:3000`.
 6. Go to the **Credit History** tab — confirm that all transactions (registration credit grant, script generation deduction, audio generation deduction) are displayed completely and in the correct chronological order.
 
 <video width="100%" controls>
-    <source src="/Images/demo.mp4" type="video/mp4">
+    <source src="https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/demo.mp4" type="video/mp4">
     Your browser does not support video.
 </video>
 

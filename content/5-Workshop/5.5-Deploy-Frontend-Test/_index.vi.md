@@ -71,7 +71,7 @@ Mở `http://localhost:3000`.
    credit tạo audio hiển thị đầy đủ và đúng thứ tự thời gian.
 
 <video width="100%" controls>
-    <source src="/Images/demo.mp4" type="video/mp4">
+    <source src="https://truong-ca.github.io/-AI-Marketing-Voice-Workshop/images/demo.mp4" type="video/mp4">
     Trình duyệt của bạn không hỗ trợ video.
 </video>
 
