@@ -7,22 +7,20 @@ pre: " <b> 3.1. </b> "
 ---
 
 
-# Di chuyển dữ liệu và tiết kiệm chi phí ở quy mô lớn với Amazon S3 File Gateway
-
-Nếu bạn đang quản lý hệ thống máy chủ lưu trữ nội bộ (on-premises) và muốn di chuyển một lượng lớn dữ liệu lên đám mây, chắc hẳn bạn đã hoặc sẽ gặp phải bài toán đau đầu này: Làm sao để di chuyển mà vẫn giữ nguyên cấu trúc cũng như ngày giờ tạo (Create Date) gốc của các tệp tin? Việc dữ liệu bị "làm mới" thời gian lúc tải lên đám mây không chỉ làm mất đi thông tin lịch sử quan trọng mà còn tước đi cơ hội tận dụng các chính sách tự động phân tầng để tiết kiệm chi phí cho những dữ liệu đã cũ.
-1. Vấn đề: Khi di chuyển dữ liệu lên Amazon S3 thông qua S3 File Gateway, hệ thống sẽ tự động lấy "Ngày sửa đổi" (Modified Date) từ tệp nguồn để gán thành "Ngày tạo" (Create Date) mới trên S3. Sự thay đổi này làm tuổi thọ của tệp bị "reset", khiến các Chính sách Vòng đời (S3 Lifecycle Policy) không thể tự động phân loại và đẩy những dữ liệu cũ vào các lớp lưu trữ giá rẻ dựa trên tuổi đời thật của chúng, gây lãng phí ngân sách lưu trữ của doanh nghiệp.
-2. Bước ngoặt: Giải pháp tự động hóa bảo toàn siêu dữ liệu Thay vì để AWS làm mới thời gian, bạn có thể kết hợp Robocopy, Amazon S3 File Gateway, và AWS Lambda để di chuyển dữ liệu mà vẫn giữ nguyên vẹn các siêu dữ liệu (metadata) ban đầu. Hàm Lambda sẽ tự động đọc ngày tháng thực sự của tệp và chuyển chúng vào đúng lớp lưu trữ phù hợp (như Glacier Instant Retrieval hay Glacier Deep Archive) ngay khi dữ liệu vừa hạ cánh lên S3.
-3. Tại sao đây là giải pháp tối ưu cho việc di chuyển dữ liệu? Giải pháp này mang lại các lợi ích cốt lõi giúp tối ưu hóa chi phí:
-Bảo toàn thông tin gốc: Giữ nguyên thời gian tạo, sửa đổi và các quyền truy cập NTFS gốc của tệp trong quá trình chuyển đổi.
-Tối ưu hóa chi phí ở quy mô lớn: Tự động đẩy các tệp tin cũ vào các lớp lưu trữ S3 có chi phí thấp dựa trên tuổi thọ thật sự của chúng thay vì ngày chúng được đưa lên đám mây.
-Hỗ trợ kiến trúc lai (Hybrid Cloud): Doanh nghiệp vẫn có thể truy cập dữ liệu đám mây từ các ứng dụng on-premises thông qua các giao thức quen thuộc như SMB và NFS mà không cần phải thay đổi môi trường hiện tại.
-Tự động hóa hoàn toàn: Tận dụng khả năng tích hợp sâu của Lambda với S3 để tự động thực thi các hành động chuyển đổi lớp lưu trữ mà không cần sự can thiệp thủ công.
-4. Cơ chế hoạt động đằng sau Hệ thống được vận hành thông qua sự phối hợp của 3 thành phần chính:
-Robocopy: Sử dụng công cụ này với các tham số chuyên dụng (như /TIMEFIX để đồng bộ thời gian, /SECFIX để sao chép quyền truy cập) để chép dữ liệu vào file share của S3 File Gateway nhằm giữ lại các thuộc tính gốc.
-Amazon S3 File Gateway: Khi tự động đưa tệp lên S3, gateway sẽ lưu trữ thời gian gốc (thông số mtime) dưới dạng siêu dữ liệu do người dùng xác định (user-defined metadata) đính kèm vào các object trên S3.
-AWS Lambda: Bất cứ khi nào có lệnh PUT để ghi một object lên S3, Lambda sẽ được kích hoạt, trích xuất thông số mtime (dưới định dạng Unix time) từ siêu dữ liệu và gọi API để chuyển tệp sang lớp lưu trữ chi phí thấp nếu đạt đủ điều kiện về tuổi thọ.
-5. Một vài lưu ý nhỏ khi triển khai Để cài đặt và di chuyển thành công, bạn cần chú ý:
-Cẩn trọng với tốc độ của Robocopy: Quá trình sao chép có thể chậm tùy thuộc vào số lượng tệp và tốc độ ổ cứng hệ thống. Bạn có thể sử dụng cờ /L (tùy chọn dry run) để xem trước các thay đổi công cụ sẽ thực hiện trước khi quyết định sao chép thật.
-Lựa chọn nền tảng cho File Gateway: S3 File Gateway hỗ trợ chạy dưới dạng máy ảo (VMware, Microsoft Hyper-V, Linux KVM) hoặc bạn cũng có thể sử dụng nó như một thiết bị phần cứng chuyên dụng ngay tại trung tâm dữ liệu của mình.
-Link gốc: https://aws.amazon.com/vi/blogs/storage/data-migrations-at-scale-with-amazon-s3-file-gateway
-**Link bài đăng (AWS Study Group):** https://www.facebook.com/share/p/1BVxJjTEmi/?
+# Amazon Bedrock AgentCore Payments 
+Amazon Bedrock AgentCore Payments là gì?
+Ngày 07/05/2026, AWS công bố bản preview của Amazon Bedrock AgentCore Payments — một tính năng mới nằm trong Amazon Bedrock AgentCore. Điểm đặc biệt: tính năng này cho phép AI Agent tự động thanh toán để truy cập các API, MCP server, nội dung web trả phí, hoặc thậm chí thuê một Agent khác làm việc — mà không cần con người can thiệp vào từng giao dịch.
+Vì sao AWS lại làm tính năng này?
+Theo bài viết, ngày càng nhiều dịch vụ chuyển sang mô hình tính phí theo từng lượt gọi, với chi phí mỗi lần có khi chỉ vài phần nghìn của 1 đô la. Trước đây, nếu muốn Agent tự thanh toán cho các dịch vụ như vậy, đội ngũ phát triển phải tự xây dựng quan hệ thanh toán riêng với từng nhà cung cấp, tự quản lý thông tin xác thực, tự đặt giới hạn chi tiêu — một khối lượng công việc kỹ thuật không nhỏ, và rủi ro cũng cao vì sai sót ở đây đồng nghĩa với việc mất tiền thật.
+Cách hoạt động cơ bản:
+Một vài điểm mình thấy đáng chú ý về cách tính năng này vận hành:
+Nhà phát triển kết nối Agent với một ví thanh toán, người dùng cuối nạp tiền vào ví bằng stablecoin hoặc thẻ.
+Trước khi Agent được phép giao dịch, người dùng phải chủ động cấp quyền sử dụng ví đó.
+Mỗi phiên làm việc đều có giới hạn chi tiêu riêng — Agent không bao giờ có quyền truy cập tiền một cách không giới hạn.
+Khi Agent gặp một endpoint tính phí và nhận phản hồi yêu cầu thanh toán, hệ thống sẽ tự động xác thực ví, thực hiện thanh toán bằng stablecoin, và tiếp tục lấy nội dung — toàn bộ diễn ra ngay trong vòng lặp xử lý của Agent, không làm gián đoạn luồng suy luận.
+Toàn bộ giao dịch đều có thể theo dõi lại qua log và observability có sẵn của AgentCore.
+Cơ chế này dựa trên x402 — một giao thức thanh toán mở, hoạt động trên nền HTTP, do Coinbase phát triển.
+Ứng dụng thực tế:
+Một Agent nghiên cứu tài chính có thể tự trả phí để lấy dữ liệu thị trường thời gian thực hoặc bài báo trả phí, thay mặt người dùng cuối.
+Một coding Agent có thể tự gọi và trả phí cho các API chuyên biệt, ví dụ một private package registry hay môi trường sandbox để chạy thử code.
+Xa hơn, AWS hình dung Agent có thể tự đặt vé máy bay, đặt phòng khách sạn, hoàn tất giao dịch mua hàng thay người dùng.
