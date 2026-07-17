@@ -86,6 +86,6 @@ Amazon S3 File Gateway can be deployed in multiple environments, including:
 
 This flexibility allows organizations to integrate cloud storage with their existing infrastructure while minimizing operational changes.
 
-**Original AWS Blog:** https://aws.amazon.com/vi/blogs/storage/data-migrations-at-scale-with-amazon-s3-file-gateway
+
 
 **Original Post (AWS Study Group):** https://www.facebook.com/share/p/1BVxJjTEmi/?

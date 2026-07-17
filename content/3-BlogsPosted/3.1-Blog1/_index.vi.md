@@ -7,7 +7,7 @@ pre: " <b> 3.1. </b> "
 ---
 
 
-# Amazon Bedrock AgentCore Payments 
+# Di chuyển dữ liệu và tiết kiệm chi phí ở quy mô lớn với Amazon S3 File Gateway
 
 Nếu bạn đang quản lý hệ thống máy chủ lưu trữ nội bộ (on-premises) và muốn di chuyển một lượng lớn dữ liệu lên đám mây, chắc hẳn bạn đã hoặc sẽ gặp phải bài toán đau đầu này: Làm sao để di chuyển mà vẫn giữ nguyên cấu trúc cũng như ngày giờ tạo (Create Date) gốc của các tệp tin? Việc dữ liệu bị "làm mới" thời gian lúc tải lên đám mây không chỉ làm mất đi thông tin lịch sử quan trọng mà còn tước đi cơ hội tận dụng các chính sách tự động phân tầng để tiết kiệm chi phí cho những dữ liệu đã cũ.
 1. Vấn đề: Khi di chuyển dữ liệu lên Amazon S3 thông qua S3 File Gateway, hệ thống sẽ tự động lấy "Ngày sửa đổi" (Modified Date) từ tệp nguồn để gán thành "Ngày tạo" (Create Date) mới trên S3. Sự thay đổi này làm tuổi thọ của tệp bị "reset", khiến các Chính sách Vòng đời (S3 Lifecycle Policy) không thể tự động phân loại và đẩy những dữ liệu cũ vào các lớp lưu trữ giá rẻ dựa trên tuổi đời thật của chúng, gây lãng phí ngân sách lưu trữ của doanh nghiệp.
@@ -24,5 +24,5 @@ AWS Lambda: Bất cứ khi nào có lệnh PUT để ghi một object lên S3, L
 5. Một vài lưu ý nhỏ khi triển khai Để cài đặt và di chuyển thành công, bạn cần chú ý:
 Cẩn trọng với tốc độ của Robocopy: Quá trình sao chép có thể chậm tùy thuộc vào số lượng tệp và tốc độ ổ cứng hệ thống. Bạn có thể sử dụng cờ /L (tùy chọn dry run) để xem trước các thay đổi công cụ sẽ thực hiện trước khi quyết định sao chép thật.
 Lựa chọn nền tảng cho File Gateway: S3 File Gateway hỗ trợ chạy dưới dạng máy ảo (VMware, Microsoft Hyper-V, Linux KVM) hoặc bạn cũng có thể sử dụng nó như một thiết bị phần cứng chuyên dụng ngay tại trung tâm dữ liệu của mình.
-Link gốc: https://aws.amazon.com/vi/blogs/storage/data-migrations-at-scale-with-amazon-s3-file-gateway
+
 **Link bài đăng (AWS Study Group):** https://www.facebook.com/share/p/1BVxJjTEmi/?
