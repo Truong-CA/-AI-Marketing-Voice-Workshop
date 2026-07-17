@@ -168,8 +168,6 @@ These concepts form one of the most important foundations for anyone beginning t
 
 **Original Post (AWS Study Group):** https://www.facebook.com/groups/awsstudygroupfcj/permalink/2206918726739754/?rdid=6SeKNuZnOr9PjQrn#
 
-
-**Original Post (AWS Study Group):** https://www.facebook.com/share/p/1BVxJjTEmi/?
 {{% notice note %}}
 I'd like to borrow a blog post from a member of my group who left the AWS - FCAJ internship program because they already had the signature of their previous employer.
 {{% /notice %}}
