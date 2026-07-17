@@ -152,3 +152,7 @@ nguyên tắc Least Privilege giúp giảm thiểu rủi ro và bảo vệ hệ 
 những nền tảng quan trọng khi bắt đầu làm việc với AWS.
 
 **Link bài đăng (AWS Study Group):** https://www.facebook.com/groups/awsstudygroupfcj/permalink/2206918726739754/?rdid=6SeKNuZnOr9PjQrn#
+
+{{% notice note %}}
+Tôi xin phép lấy bài blog của bạn cùng nhóm, bạn đã rời khỏi chương trình thực tập tại AWS - FCAJ do đã có mộc của công ty cũ.
+{{% /notice %}}

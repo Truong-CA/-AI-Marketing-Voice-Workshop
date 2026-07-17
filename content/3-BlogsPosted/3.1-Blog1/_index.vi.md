@@ -26,3 +26,6 @@ Cẩn trọng với tốc độ của Robocopy: Quá trình sao chép có thể 
 Lựa chọn nền tảng cho File Gateway: S3 File Gateway hỗ trợ chạy dưới dạng máy ảo (VMware, Microsoft Hyper-V, Linux KVM) hoặc bạn cũng có thể sử dụng nó như một thiết bị phần cứng chuyên dụng ngay tại trung tâm dữ liệu của mình.
 
 **Link bài đăng (AWS Study Group):** https://www.facebook.com/share/p/1BVxJjTEmi/?
+{{% notice note %}}
+Tôi xin phép lấy bài blog của bạn cùng nhóm, bạn đã rời khỏi chương trình thực tập tại AWS - FCAJ do đã có mộc của công ty cũ.
+{{% /notice %}}

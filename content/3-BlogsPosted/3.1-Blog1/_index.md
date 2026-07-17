@@ -89,3 +89,6 @@ This flexibility allows organizations to integrate cloud storage with their exis
 
 
 **Original Post (AWS Study Group):** https://www.facebook.com/share/p/1BVxJjTEmi/?
+{{% notice note %}}
+I'd like to borrow a blog post from a member of my group who left the AWS - FCAJ internship program because they already had the signature of their previous employer.
+{{% /notice %}}
