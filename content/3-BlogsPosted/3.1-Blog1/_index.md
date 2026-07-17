@@ -6,70 +6,86 @@ chapter: false
 pre: " <b> 3.1. </b> "
 ---
 
-# Amazon Bedrock AgentCore Payments
+# Migrating Data at Scale and Reducing Storage Costs with Amazon S3 File Gateway
 
-## 1. What is Amazon Bedrock AgentCore Payments?
+If you are managing an on-premises storage system and planning to migrate a large volume of data to the cloud, you have probably encountered—or will eventually encounter—a common challenge: **How can you migrate data while preserving its original directory structure and file creation timestamps?**
 
-On May 7, 2026, AWS announced the preview of **Amazon Bedrock AgentCore Payments** — a new capability within Amazon Bedrock AgentCore. What makes it stand out is that it lets an AI Agent **automatically pay** to access paid APIs, MCP servers, paywalled web content, or even hire another Agent to do work — without a human having to step in for every single transaction.
+When file timestamps are reset during migration, valuable historical information is lost. More importantly, it becomes impossible to take full advantage of Amazon S3 Lifecycle policies that automatically move older data into lower-cost storage classes, resulting in unnecessary storage expenses.
 
-In other words, instead of a human clicking "pay" every time an Agent needs a paid service, the Agent can now handle the entire lifecycle of a small transaction (a micropayment) on its own — as long as it stays within a spending limit that was authorized in advance.
+## 1. The Challenge
 
-## 2. Why did AWS build this?
+When data is migrated to Amazon S3 through **Amazon S3 File Gateway**, the gateway automatically uses the file's **Modified Date** from the source system as the object's new **Create Date** in Amazon S3.
 
-The context here is that more and more services are moving to pay-per-use pricing, sometimes charging just a fraction of a cent per call. That's too small an amount for traditional payment methods to handle efficiently, since they typically come with fairly high minimum transaction fees.
+As a result, the file's apparent age is effectively reset. Amazon S3 Lifecycle Policies can no longer determine the file's actual age, preventing older data from being automatically transitioned into lower-cost storage classes based on when it was originally created. This can significantly increase long-term storage costs for organizations.
 
-Before AgentCore Payments existed, if a team wanted their Agent to pay for such services autonomously, they had to:
+## 2. The Solution: Automating Metadata Preservation
 
-- Build a separate payment relationship with each individual provider.
-- Manage credentials for each provider on their own.
-- Design and enforce spending limits themselves to manage risk.
+Instead of allowing AWS to reset file timestamps during migration, organizations can combine **Robocopy**, **Amazon S3 File Gateway**, and **AWS Lambda** to preserve the original metadata throughout the migration process.
 
-That's a significant amount of engineering work, and the risk is high too — a mistake here means losing real money, not just triggering a software bug.
+After a file is uploaded to Amazon S3, an AWS Lambda function automatically reads the file's original timestamp stored in its metadata and moves the object into the most appropriate storage class—such as **S3 Glacier Instant Retrieval** or **S3 Glacier Deep Archive**—based on its actual age.
 
-## 3. How it basically works
+## 3. Why Is This an Effective Migration Solution?
 
-A few notable points about how this feature operates:
+This approach provides several important benefits for large-scale data migrations.
 
-### 3.1. Wallet connection and authorization
+### Preserve Original Metadata
 
-- Developers connect an Agent to a **payment wallet**, and the end user funds that wallet with stablecoin or a card.
-- Before an Agent is allowed to transact, the user must **explicitly authorize** it to use that wallet. An Agent never has default access to funds.
+The original creation time, modification time, and NTFS file permissions are retained throughout the migration process.
 
-### 3.2. Per-session spending limits
+### Optimize Storage Costs at Scale
 
-Every working session has its own spending limit, set on a time-bound basis — for example, "up to $1, expiring in 5 minutes." This means an Agent never has open-ended access to money, and the limit is enforced at the infrastructure layer rather than depending on the Agent's own logic.
+Older files can be automatically transitioned into lower-cost Amazon S3 storage classes based on their true age rather than the upload date.
 
-### 3.3. What happens when the Agent hits a paid endpoint
+### Support Hybrid Cloud Architectures
 
-When an Agent hits a paid endpoint and receives an HTTP 402 (Payment Required) response, the system will:
+Organizations can continue accessing cloud-based data from existing on-premises applications using familiar protocols such as **SMB** and **NFS**, without changing their current workflows.
 
-1. Automatically authenticate the wallet.
-2. Execute the payment in stablecoin.
-3. Send proof of payment back to the endpoint.
-4. Continue retrieving the requested content.
+### Fully Automated Operation
 
-All of this happens right inside the Agent's own reasoning loop, without interrupting it.
+AWS Lambda integrates seamlessly with Amazon S3 to automate storage class transitions without requiring manual intervention.
 
-### 3.4. Observability and traceability
+## 4. How the Solution Works
 
-Every transaction can be traced through AgentCore's existing logs, metrics, and observability tools — the same way developers are already used to monitoring other parts of their Agent systems.
+The architecture consists of three primary components working together.
 
-### 3.5. The underlying protocol: x402
+### Robocopy
 
-This mechanism is built on **x402** — an open, HTTP-native payment protocol developed by Coinbase. x402 repurposes the HTTP 402 status code (long reserved but rarely used) to standardize how payments are requested and confirmed between machine-to-machine systems. AgentCore Payments comes with Coinbase's wallet infrastructure and discovery layer built in, along with an MCP server called the **Coinbase x402 Bazaar**, which lets Agents search and use over 10,000 x402-enabled endpoints through AgentCore Gateway.
+Robocopy copies files to the Amazon S3 File Gateway file share while preserving important file attributes by using options such as:
 
-## 4. Real-world use cases
+- `/TIMEFIX` to preserve timestamps.
+- `/SECFIX` to preserve NTFS permissions.
 
-- **Financial research agent**: can pay on its own to pull real-time market data or paywalled articles on behalf of the end user.
-- **Coding agent**: can call and pay for specialized APIs on its own, such as a private package registry or a sandbox environment for testing code.
-- **Booking agent**: looking further ahead, AWS envisions Agents autonomously booking flights, reserving hotel rooms, and completing purchases on a user's behalf.
+### Amazon S3 File Gateway
 
-## 5. A few things worth keeping in mind
+When files are uploaded to Amazon S3, the gateway stores the original modification time (`mtime`) as **user-defined metadata** attached to each S3 object.
 
-Since this is still a **preview**, there are a few things worth considering before adopting it:
+### AWS Lambda
 
-- Security and spending-limit controls are the crucial piece — it's worth understanding exactly how per-session limits are configured before putting this into production.
-- Because payments run on stablecoin and an open protocol like x402, compliance concerns — anti-money-laundering, financial risk controls, and so on — need to be reviewed by legal/security teams alongside the engineering team.
-- The feature is currently available only in certain AWS regions, so it's worth checking the official AWS documentation before rolling it out.
+Whenever a new object is uploaded to Amazon S3 through a **PUT** request, an AWS Lambda function is triggered.
 
-**Original Post (AWS Study Group):** https://www.facebook.com/groups/awsstudygroupfcj/permalink/2209520659812894/?rdid=KksVsVCci61lusGW#
+The function reads the stored `mtime` value (in Unix timestamp format) from the object's metadata and determines whether the object should be moved into a lower-cost storage class based on its actual age.
+
+## 5. Deployment Considerations
+
+There are a few important considerations when implementing this solution.
+
+### Robocopy Performance
+
+Copy speed depends on factors such as the number of files and disk performance.
+
+Before performing the actual migration, you can use the `/L` (dry run) option to preview the operations Robocopy will perform.
+
+### Choosing a Platform for Amazon S3 File Gateway
+
+Amazon S3 File Gateway can be deployed in multiple environments, including:
+
+- VMware
+- Microsoft Hyper-V
+- Linux KVM
+- AWS Storage Gateway hardware appliance deployed in an on-premises data center
+
+This flexibility allows organizations to integrate cloud storage with their existing infrastructure while minimizing operational changes.
+
+**Original AWS Blog:** https://aws.amazon.com/vi/blogs/storage/data-migrations-at-scale-with-amazon-s3-file-gateway
+
+**Original Post (AWS Study Group):** https://www.facebook.com/share/p/1BVxJjTEmi/?

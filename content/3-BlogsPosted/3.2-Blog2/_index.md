@@ -1,98 +1,75 @@
 ---
-title: "Blog 2"
+title: "Blog 1"
 date: 2024-01-01
-weight: 2
+weight: 1
 chapter: false
-pre: " <b> 3.2. </b> "
+pre: " <b> 3.1. </b> "
 ---
 
-# My AWS Learning Journey: A Roadmap and Resources for Beginners
+# Amazon Bedrock AgentCore Payments
 
-Learning AWS becomes much easier when you have the right learning resources. These are the resources I recommend for anyone just getting started.
+## 1. What is Amazon Bedrock AgentCore Payments?
 
-If you decide to learn AWS today, the first thing that may overwhelm you probably won't be Amazon EC2 or Amazon VPC—it will be the thousands of learning resources that appear after a single search.
+On May 7, 2026, AWS announced the preview of **Amazon Bedrock AgentCore Payments** — a new capability within Amazon Bedrock AgentCore. What makes it stand out is that it lets an AI Agent **automatically pay** to access paid APIs, MCP servers, paywalled web content, or even hire another Agent to do work — without a human having to step in for every single transaction.
 
-Videos, blogs, online courses, official documentation... every source teaches AWS differently. When I first started, I had no idea where to begin. After spending some time exploring different resources, I realized that choosing the right materials and following a structured learning path makes learning AWS much more manageable.
+In other words, instead of a human clicking "pay" every time an Agent needs a paid service, the Agent can now handle the entire lifecycle of a small transaction (a micropayment) on its own — as long as it stays within a spending limit that was authorized in advance.
 
-## Don't Try to Learn Every AWS Service at Once
+## 2. Why did AWS build this?
 
-One of the biggest mistakes I made as a beginner was trying to learn too many AWS services at the same time.
+The context here is that more and more services are moving to pay-per-use pricing, sometimes charging just a fraction of a cent per call. That's too small an amount for traditional payment methods to handle efficiently, since they typically come with fairly high minimum transaction fees.
 
-One day I studied Amazon EC2, the next day AWS Lambda, and a few days later Amazon EKS. Each service introduced new concepts and use cases, and the more I learned, the more confused I became. In the end, I couldn't remember much of what I had studied.
+Before AgentCore Payments existed, if a team wanted their Agent to pay for such services autonomously, they had to:
 
-Eventually, I changed my learning approach. Instead of studying services individually, I learned them based on their foundational importance and how they relate to one another.
+- Build a separate payment relationship with each individual provider.
+- Manage credentials for each provider on their own.
+- Design and enforce spending limits themselves to manage risk.
 
-The learning path I followed was:
+That's a significant amount of engineering work, and the risk is high too — a mistake here means losing real money, not just triggering a software bug.
 
-- **IAM** to understand identity and access management.
-- **Amazon VPC** to learn how AWS networking works.
-- **Amazon EC2** to deploy virtual servers.
-- **Amazon S3** to store data.
-- **Amazon RDS** to manage relational databases.
+## 3. How it basically works
 
-Following this sequence helped me understand not only each service individually but also how they work together in real-world architectures. It made the learning process much more organized and effective.
+A few notable points about how this feature operates:
 
-## AWS Skill Builder – The Best Starting Point for Beginners
+### 3.1. Wallet connection and authorization
 
-If I could recommend only one learning resource for AWS beginners, it would be **AWS Skill Builder**.
+- Developers connect an Agent to a **payment wallet**, and the end user funds that wallet with stablecoin or a card.
+- Before an Agent is allowed to transact, the user must **explicitly authorize** it to use that wallet. An Agent never has default access to funds.
 
-AWS Skill Builder is AWS's official online learning platform that provides a large collection of free courses for beginners. The courses are organized by skill level, making them easy to follow even if you have no prior cloud computing experience.
+### 3.2. Per-session spending limits
 
-What I like most is that AWS Skill Builder provides structured **Learning Plans**, helping beginners understand what to study first. It also includes quizzes to reinforce learning and free **Hands-on Labs** that allow you to practice immediately after completing each lesson.
+Every working session has its own spending limit, set on a time-bound basis — for example, "up to $1, expiring in 5 minutes." This means an Agent never has open-ended access to money, and the limit is enforced at the infrastructure layer rather than depending on the Agent's own logic.
 
-For anyone just starting out, I believe this is one of the best resources for building a strong AWS foundation before moving on to more advanced services.
+### 3.3. What happens when the Agent hits a paid endpoint
 
-## AWS Documentation – The Resource I Return to Most Often
+When an Agent hits a paid endpoint and receives an HTTP 402 (Payment Required) response, the system will:
 
-At first, I avoided reading the official documentation because I thought it would be difficult to understand.
+1. Automatically authenticate the wallet.
+2. Execute the payment in stablecoin.
+3. Send proof of payment back to the endpoint.
+4. Continue retrieving the requested content.
 
-However, the more I learned, the more I realized that AWS Documentation is the most accurate and up-to-date source of information. Whenever I want to understand a service or verify a feature, I always read the documentation before starting hands-on practice.
+All of this happens right inside the Agent's own reasoning loop, without interrupting it.
 
-For example, while learning IAM, instead of watching multiple videos from different creators, I read the official AWS guides to understand how to create IAM Users, write IAM Policies, and apply the Principle of Least Privilege. I used the same approach when learning services such as Amazon VPC, Amazon EC2, and Amazon S3.
+### 3.4. Observability and traceability
 
-## AWS Well-Architected Framework – Learning to Build Systems the Right Way
+Every transaction can be traced through AgentCore's existing logs, metrics, and observability tools — the same way developers are already used to monitoring other parts of their Agent systems.
 
-The AWS Well-Architected Framework helped me understand how to design systems based on AWS best practices rather than simply learning how individual services work.
+### 3.5. The underlying protocol: x402
 
-Its pillars, such as **Security**, **Reliability**, and **Cost Optimization**, changed my mindset from simply "making it work" to "building it correctly."
+This mechanism is built on **x402** — an open, HTTP-native payment protocol developed by Coinbase. x402 repurposes the HTTP 402 status code (long reserved but rarely used) to standardize how payments are requested and confirmed between machine-to-machine systems. AgentCore Payments comes with Coinbase's wallet infrastructure and discovery layer built in, along with an MCP server called the **Coinbase x402 Bazaar**, which lets Agents search and use over 10,000 x402-enabled endpoints through AgentCore Gateway.
 
-## YouTube – Learning from AWS Experts
+## 4. Real-world use cases
 
-Instead of watching random tutorials, I mainly follow official AWS channels such as **AWS Events**, **AWS Online Tech Talks**, and **AWS re:Invent**.
+- **Financial research agent**: can pay on its own to pull real-time market data or paywalled articles on behalf of the end user.
+- **Coding agent**: can call and pay for specialized APIs on its own, such as a private package registry or a sandbox environment for testing code.
+- **Booking agent**: looking further ahead, AWS envisions Agents autonomously booking flights, reserving hotel rooms, and completing purchases on a user's behalf.
 
-The most important lesson I learned is to practice while watching.
+## 5. A few things worth keeping in mind
 
-For example, when following a tutorial on creating an Amazon VPC or launching an EC2 instance, I open the AWS Management Console and perform every step myself. Practicing alongside the instructor helps me retain the knowledge much better than simply watching videos.
+Since this is still a **preview**, there are a few things worth considering before adopting it:
 
-## AWS Free Tier – Learn by Doing
+- Security and spending-limit controls are the crucial piece — it's worth understanding exactly how per-session limits are configured before putting this into production.
+- Because payments run on stablecoin and an open protocol like x402, compliance concerns — anti-money-laundering, financial risk controls, and so on — need to be reviewed by legal/security teams alongside the engineering team.
+- The feature is currently available only in certain AWS regions, so it's worth checking the official AWS documentation before rolling it out.
 
-Whenever I learn a new AWS service, I create real resources using the AWS Free Tier, experiment with them, and delete everything after I finish.
-
-Repeating this process helps reinforce my understanding while also preventing unnecessary AWS charges.
-
-## GitHub – A Valuable Resource That Many Beginners Overlook
-
-Once I had a basic understanding of AWS, I started exploring real-world projects on GitHub, such as **Awesome AWS**, **AWS Samples**, and **Terraform Examples**.
-
-In my opinion, reading other people's source code is one of the best ways to understand how AWS services are used in real production environments.
-
-## Mistakes I Made While Learning AWS
-
-Looking back, I realized I repeatedly made several common mistakes:
-
-- Reading too much but practicing too little, causing me to forget what I had learned quickly.
-- Trying to study too many AWS services simultaneously without understanding any of them deeply.
-- Avoiding AWS Documentation because I assumed it was difficult, even though it is the most reliable learning resource.
-- Forgetting to delete AWS resources after completing labs, which can easily lead to unexpected charges.
-
-Through this experience, I learned that mastering AWS isn't about learning as quickly as possible. Following a structured roadmap, practicing consistently, and making good use of free learning resources are far more important.
-
-## Conclusion
-
-After spending time learning AWS, I realized that success is not about having access to countless learning resources. It is about choosing the right ones and consistently applying what you learn through hands-on practice.
-
-Using only the free resources provided by AWS and the community, I was able to build a solid foundation, complete hands-on labs, and gain a much better understanding of how AWS services work together.
-
-If you're just starting your AWS journey, don't try to learn everything at once. Begin with the core services, practice regularly, and take full advantage of the free learning resources before considering paid courses.
-
-**Original Post (AWS Study Group):** https://www.facebook.com/groups/awsstudygroupfcj/permalink/2206923336739293/?rdid=mB3Nul56Gy964LJX#
+**Original Post (AWS Study Group):** https://www.facebook.com/groups/awsstudygroupfcj/permalink/2209520659812894/?rdid=KksVsVCci61lusGW#
