@@ -6,168 +6,67 @@ chapter: false
 pre: " <b> 3.3. </b> "
 ---
 
-# IAM User & IAM Policy: Two Fundamental Concepts When Learning AWS
+# AWS Lambda MicroVMs — When Serverless Gets VM-Level Power
 
-IAM User and IAM Policy are two fundamental concepts that anyone learning AWS should understand.
+## 1. What is AWS Lambda MicroVMs?
 
-When I first created my AWS account, I only used the Root Account because it is the first account AWS provides. At first, it seemed convenient, but after learning more about AWS security, I realized this is one of the most common mistakes beginners make when starting with cloud computing.
+AWS has just launched **AWS Lambda MicroVMs** — an entirely new serverless compute primitive, distinct from traditional Lambda Functions, that provides VM-level isolated sandboxes: no shared kernel, no shared resources between sessions. It's built on Firecracker — the very same virtualization technology that has powered over 15 trillion Lambda invocations every month.
 
-The Root Account has full control over the entire AWS account. If its password or access keys are ever compromised, all AWS resources could be deleted or misused.
+In short: if Lambda Functions let you "run a piece of code and then it's gone," Lambda MicroVMs give you your own dedicated virtual machine — one that starts up almost instantly, can hold state for hours, yet remains fully serverless, with no server to manage.
 
-To minimize this risk, AWS recommends using the Root Account only for a few special administrative tasks while performing daily operations through IAM Users combined with IAM Policies.
+## 2. The problem with traditional Lambda
 
-## Why shouldn't you use the Root Account every day?
+Classic Lambda runs functions in a shared environment — fast, cheap, but not isolated enough for sensitive workloads or ones that need long-lived state. This created an awkward situation for a lot of teams: they were forced to pick one of two directions, even though the actual job was often simple — "run a piece of user- or AI-generated code, then stop":
 
-The Root Account has **Full Administrative Access** to every AWS service and resource. Unlike IAM Users, it is not restricted by any IAM Policy, meaning it can create, modify, or delete any resource within the account.
+- **Lambda Functions**: fast, cheap, no infrastructure to manage — but no persistent state, a hard 15-minute execution cap, and not deep enough isolation for sensitive use cases.
+- **Containers or EC2**: better isolation, state can persist — but you have to manage the entire infrastructure lifecycle yourself: clusters, capacity, patching, networking... and you still pay even when there's no traffic (idle).
 
-Because of these unrestricted permissions, the Root Account also carries significant security risks. If an attacker gains access to it, they could delete EC2 instances, RDS databases, S3 buckets, or create new resources that result in unexpected costs.
+This tradeoff became even more pronounced as a wave of multi-tenant applications running user- or AI-generated code took off — coding assistants, AI agents, code execution sandboxes, data analytics platforms, and more. Each user or session needs its own isolated execution environment, so that one person's bug or malicious code can't affect another user running in parallel.
 
-AWS recommends avoiding the Root Account for everyday activities. Instead, create IAM Users with only the permissions they actually need.
+## 3. How Lambda MicroVMs solves this
 
-The Root Account should only be used for special tasks such as:
+Lambda MicroVMs provides a fully isolated sandbox at the VM level, with no shared kernel or resources between sessions. The mechanism is quite interesting, following an "image first, then launch" model:
 
-- Changing payment methods.
-- Managing billing information.
-- Closing the AWS account.
-- Performing actions that only the Root Account is allowed to perform.
+1. **Create a MicroVM Image**: you package your application code together with a Dockerfile into a zip archive, upload it to Amazon S3, then call the Lambda API to create an image. Lambda runs that Dockerfile, initializes your application, and captures a snapshot of the full memory and disk state once the app is ready.
+2. **Launch a MicroVM from that image**: whenever you need a new isolated environment — for a user session, a job, or a sandbox — you call `run-microvm`. Lambda launches the MicroVM from the pre-initialized snapshot instead of cold-booting from scratch, so startup is near-instant.
+3. **Connect directly**: each MicroVM gets its own dedicated HTTPS endpoint, supporting popular protocols like HTTP/2, gRPC, and WebSockets — no load balancer needed, no networking to set up yourself.
+4. **Suspend/Resume on demand**: once the user stops interacting, the MicroVM automatically suspends after a configurable idle window, preserving the full memory and disk state. When traffic returns, it resumes right where it left off — state is preserved for up to 8 hours.
 
-After completing the initial account setup, I rarely use the Root Account anymore. Instead, I perform all daily work through IAM Users, which is also one of AWS's recommended Security Best Practices.
+The entire process doesn't require you to manually manage clusters, capacity, or a VM lifecycle the way you would running EC2 or containers yourself.
 
-## IAM User – One Account for Each Person
+## 4. Why this is a big deal
 
-Instead of allowing multiple people to share the Root Account, I create a separate IAM User for every individual.
+Previously, when building an application that needed to hand each user or job its own environment, you almost always had to trade off between three things: **startup speed**, **level of isolation**, and **ability to retain state**. There was no option that gave you all three at once:
 
-Each IAM User has:
+| | Lambda Functions | EC2 / ECS | Lambda MicroVMs |
+|---|---|---|---|
+| Startup speed | Very fast | Slower, self-managed | Near-instant (resumes from snapshot) |
+| Isolation level | Shared resources | Strong isolation | VM-level, no shared kernel |
+| State retention | None (15-min max per run) | Yes, but self-managed | Yes, up to 8 hours, auto suspend/resume |
+| Infra management | None needed | Required (clusters, patching, capacity...) | None needed |
+| Cost while idle | None (nothing runs) | Still incurred | Reduced via auto-suspend |
 
-- Its own username and password.
-- Its own Multi-Factor Authentication (MFA).
-- Its own Access Keys when using the AWS CLI or SDK.
+Lambda MicroVMs fills exactly that gap in the middle: you get VM-level isolation and state retention comparable to running your own EC2, while keeping the "don't worry about servers" experience that defines serverless.
 
-This allows every team member to use their own account without sharing credentials. AWS can also accurately identify who performed each action through AWS CloudTrail.
+Notably, this isn't an update to Lambda Functions — it's an **entirely new resource** within the Lambda ecosystem, with its own distinct API (`lambda-microvms`). Lambda Functions remain the right choice for short-lived, event-driven, request-response workloads, while Lambda MicroVMs is purpose-built for multi-tenant applications that need to hand each user or session its own long-lived, isolated execution environment. The two are complementary, not a replacement for one another.
 
-User management becomes much easier as well. When a new employee joins, simply create a new IAM User. When someone leaves, disable or delete that user account.
+## 5. Real-world use cases
 
-## IAM Policy – Defining What Users Can Do
+- **AI agents with long-running sessions**: modern coding assistants and AI agents often need to run LLM-generated code iteratively while preserving context between iterations, and can rapidly spin up or tear down environments to test alternative code paths — for example, in reinforcement learning. Lambda MicroVMs fits this need directly.
+- **User code execution sandboxes**: platforms like online judges, code playgrounds, or vulnerability scanners need strong isolation between sessions, the ability to scale quickly under bursts of concurrent requests, and sometimes elevated OS-level privileges.
+- **CI/CD**: pipelines need ephemeral, isolated build and test environments that start quickly and can be discarded after each run — MicroVMs provides a dedicated isolated environment per pipeline stage, with no shared state between jobs.
+- **Multi-tenant sensitive data processing**: data-processing tasks that must guarantee absolutely no information leakage between different tenants sharing the same platform.
 
-If an IAM User is like an employee, then an IAM Policy is the job description.
+## 6. Things worth noting
 
-For example, an intern may only need permissions to manage EC2 by:
+At launch, Lambda MicroVMs is available in five regions: US East (N. Virginia), US East (Ohio), US West (Oregon), Asia Pacific (Tokyo), and one Europe region. The current supported configuration is ARM64 architecture, with up to 16 vCPUs, 32 GB of memory, and 32 GB of disk per instance. The default base image is a minimal Amazon Linux 2023, which you can further customize through your own Dockerfile.
 
-- Viewing EC2 instances.
-- Starting or stopping instances.
-- Rebooting instances.
+As for pricing, Lambda MicroVMs bills per second across several different dimensions (running compute resources, snapshot storage, and so on), so before moving to production it's worth reviewing the official AWS Lambda pricing page closely to estimate costs for your specific usage pattern — especially if you'll be running many concurrent sessions with long state-retention windows.
 
-Meanwhile, permissions such as:
+## 7. Closing thoughts
 
-- Deleting EC2 instances.
-- Deleting Amazon RDS databases.
-- Modifying IAM Users or IAM Policies.
-- Accessing Billing.
+Lambda MicroVMs isn't a minor Lambda update — it's an answer to a problem a lot of teams have run into over the past few years: how do you give each user or job its own execution environment that's isolated enough, fast enough, without having to operate the infrastructure yourself? With the explosion of AI agents and applications running user- or AI-generated code, this is one of the more important developments to watch in AWS's serverless ecosystem going forward.
 
-should not be granted.
-
-IAM Policies ensure that users receive only the permissions required to perform their jobs while reducing security risks.
-
-## Principle of Least Privilege – Grant Only the Permissions That Are Needed
-
-AWS strongly recommends following the **Principle of Least Privilege**, which means granting only the permissions required—nothing more.
-
-For example, if an intern only needs to monitor EC2 instances and view data stored in Amazon S3, then only these permissions should be granted:
-
-- View EC2 resources.
-- Read objects in Amazon S3.
-
-Permissions such as:
-
-- Deleting VPCs.
-- Deleting Amazon RDS databases.
-- Managing IAM.
-- Accessing Billing.
-
-should not be assigned.
-
-This principle helps reduce accidental mistakes while significantly improving the overall security of the AWS environment.
-
-## Where Can IAM Policies Be Attached?
-
-IAM Policies can be attached to several different AWS identities.
-
-### IAM User
-
-The policy applies to one specific user.
-
-This approach is simple but becomes difficult to manage as the number of users grows.
-
-### IAM Group
-
-This is the approach most organizations use.
-
-Instead of assigning permissions to individual users, policies are attached to groups. For example:
-
-- **Developer Group:** Manage EC2 and CloudWatch.
-- **Tester Group:** Read-only access.
-- **Finance Group:** Billing access only.
-
-When a new employee joins, simply add them to the appropriate group.
-
-### IAM Role
-
-IAM Roles are commonly used when AWS services need permission to perform actions on behalf of users.
-
-For example, if an EC2 instance needs to read data from Amazon S3, attaching an IAM Role to the EC2 instance is much safer than storing Access Keys on the server.
-
-This is also the approach recommended by AWS because it is both secure and easy to manage.
-
-## Managed Policies and Inline Policies
-
-AWS supports two common types of IAM Policies.
-
-### Managed Policies
-
-Managed Policies can be reused across multiple Users, Groups, and Roles.
-
-For example, an EC2 management policy can be attached to multiple developers.
-
-Advantages include:
-
-- Reusable across multiple identities.
-- Easier to maintain.
-- Updating the policy automatically updates permissions for every attached identity.
-
-AWS also provides many built-in managed policies such as:
-
-- `ReadOnlyAccess`
-- `AmazonS3ReadOnlyAccess`
-- `AdministratorAccess`
-
-### Inline Policies
-
-An Inline Policy belongs to only one User, Group, or Role.
-
-If that identity is deleted, the policy is deleted as well.
-
-Inline Policies are useful for special situations but are generally used less frequently because they are harder to manage at scale.
-
-## A Practical Example
-
-Suppose my team consists of three roles:
-
-- **Intern:** Can only view EC2 and CloudWatch.
-- **Developer:** Can deploy applications and manage EC2 and Amazon S3.
-- **Administrator:** Has full control over the AWS infrastructure.
-
-Assigning permissions based on roles ensures that everyone can perform only the tasks required for their responsibilities, improving both security and manageability.
-
-## Conclusion
-
-Through learning AWS IAM, I realized that cloud security is not only about using strong passwords but also about granting the right permissions to the right people.
-
-IAM Users provide separate identities for each individual, IAM Policies precisely define what each identity can do, and the Principle of Least Privilege minimizes security risks while protecting AWS resources.
-
-These concepts form one of the most important foundations for anyone beginning their AWS journey.
 
 **Original Post (AWS Study Group):** https://www.facebook.com/groups/awsstudygroupfcj/permalink/2206918726739754/?rdid=6SeKNuZnOr9PjQrn#
 
-{{% notice note %}}
-I'd like to borrow a blog post from a member of my group who left the AWS - FCAJ internship program because they already had the signature of their previous employer.
-{{% /notice %}}
